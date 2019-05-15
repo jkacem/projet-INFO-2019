@@ -90,13 +90,13 @@ T_SOMMET *lectureGraphe(const char *file_name)
 
   for (int i = 0; i < nbsommet; i++)
   {
-    printf("Dans la fonction alloueGraphe\n");
+    //printf("Dans la fonction alloueGraphe\n");
     fgets(mot, 511, f);
     sscanf(mot, "%d  %[^\n]", &numero, nomline);
     graphe[i].nomline = nomline;
-    printf("nomline = %s\n", graphe[i].nomline);
+    //printf("nomline = %s\n", graphe[i].nomline);
     graphe[i].numero = numero;
-    printf("numero = %d\n", graphe[i].numero);
+    //printf("numero = %d\n", graphe[i].numero);
   }
 
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
@@ -117,7 +117,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
   fclose(f);
   return graphe;
 }
-
+/*
 void main()
 {
   printf("Hello main()\n");
@@ -133,4 +133,6 @@ void main()
     printf("Sommet numero= %d son nom= %s \n", graphe[i].numero, graphe[i].nomline);
     //printf("voisins.arrivee= %d voisins.cout= %.2lf\n", graphe[i].voisins->val.arrivee, graphe[i].voisins->val.cout);
   }
+  
 }
+*/

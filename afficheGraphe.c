@@ -52,8 +52,8 @@ void main()
 {
   int nbsommets;
   T_SOMMET *graphe;
-  nbsommets = nombre_sommets("graphe1.txt");
-  graphe = lectureGraphe("graphe1.txt");
+  nbsommets = nombre_sommets("graphe2.txt");
+  graphe = lectureGraphe("graphe2.txt");
   for (int i = 0; i < nbsommets; i++)
   {
     afficheNomline(graphe, i);
@@ -61,6 +61,7 @@ void main()
     afficheVoisins(graphe, i);
   }
 }
+
 /*
 #ifndef _structure
 #define _structure
