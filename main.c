@@ -3,7 +3,11 @@
 #include <string.h>
 #include "structure.h"
 #include "lecture.h"
-
+/*
+JEDOUI Kacem 
+2018/2019
+PROJET INFO 2019
+*/
 void main()
 {
   int i, nbarc, nbsommet;
