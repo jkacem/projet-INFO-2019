@@ -72,7 +72,7 @@ int main()
         if (graphe[i].nomline == T1[i])
         {
           printf("graphe[%d].nomline est correct\n", i);
-                }
+        }
         else
         {
           printf("probleme avec graphe[%d].nomline\n");
@@ -96,4 +96,5 @@ int main()
   {
     printf("Probleme avec les nombres d'arcs et de sommets\n");
   }
+  return 0;
 }

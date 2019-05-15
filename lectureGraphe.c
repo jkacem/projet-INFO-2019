@@ -94,9 +94,9 @@ T_SOMMET *lectureGraphe(const char *file_name)
     fgets(mot, 511, f);
     sscanf(mot, "%d  %[^\n]", &numero, nomline);
     graphe[i].nomline = nomline;
-    //printf("nomline = %s\n", graphe[i].nomline);
+    //printf("graphe[%d].nomline = %s\n", i,graphe[i].nomline);
     graphe[i].numero = numero;
-    //printf("numero = %d\n", graphe[i].numero);
+    //printf("graphe[%d].numero = %d\n",i, graphe[i].numero);
   }
 
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
