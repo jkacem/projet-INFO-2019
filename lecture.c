@@ -118,7 +118,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
   }
   for (int l = 0; l < nbsommet; l++)
   {
-    printf(" [APRES//] nomline = %s && numero = %d\n", graphe[l].nomline, graphe[l].numero);
+    printf(" [APRES] nomline = %s && numero = %d\n", graphe[l].nomline, graphe[l].numero);
 
     if (graphe[l].voisins != NULL)
     {
