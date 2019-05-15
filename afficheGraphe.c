@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structure.h"
-#include "lecture.h"
+#include "lectureGraphe.h"
 
 void afficheArc(T_ARC arc)
 {

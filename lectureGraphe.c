@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <strings.h>
 #include "structure.h"
 
 int nombre_arcs(const char *file_name)
@@ -44,29 +44,22 @@ L_ARC ajoutListeArc(L_ARC larc, int a, double c)
   return p;
 }
 
-T_SOMMET initGraphe(int i, T_SOMMET *tsom)
-{
-  tsom[i].numero = i;
-  tsom[i].nomline = "\0";
-  tsom[i].voisins = NULL;
-  return tsom[i];
-}
-
 T_SOMMET *alloueGraphe(int n)
 {
   T_SOMMET *t = NULL;
   if ((t = calloc(n, sizeof(*t))) == NULL)
     return NULL;
   else
+  {
     return t;
+  }
 }
 
-T_SOMMET ajoutSommet(T_SOMMET *tmp, int i, int num, char *nom)
+T_SOMMET ajoutSommet(T_SOMMET tmp, int num, char *nom)
 {
-  tmp[i] = initGraphe(i, tmp);
-  tmp[i].nomline = nom;
-  tmp[i].numero = num;
-  return tmp[i];
+  tmp.nomline = nom;
+  tmp.numero = num;
+  return tmp;
 }
 
 T_SOMMET *lectureGraphe(const char *file_name)
@@ -97,11 +90,15 @@ T_SOMMET *lectureGraphe(const char *file_name)
 
   for (int i = 0; i < nbsommet; i++)
   {
+    printf("Dans la fonction alloueGraphe\n");
     fgets(mot, 511, f);
-    sscanf(mot, "%d %s", &numero, nomline);
-    graphe[i] = ajoutSommet(graphe, i, numero, nomline);
-    // printf("nomline = %s && numero = %d\n", graphe[i].nomline, graphe[i].numero);
+    sscanf(mot, "%d  %[^\n]", &numero, nomline);
+    graphe[i].nomline = nomline;
+    printf("nomline = %s\n", graphe[i].nomline);
+    graphe[i].numero = numero;
+    printf("numero = %d\n", graphe[i].numero);
   }
+
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
 
   for (int j = 0; j < nbarc; j++)
@@ -120,13 +117,20 @@ T_SOMMET *lectureGraphe(const char *file_name)
   fclose(f);
   return graphe;
 }
-/*
+
 void main()
 {
+  printf("Hello main()\n");
   T_SOMMET *graphe;
-  int nbsommet;
-  nbsommet = nombre_sommets("graphe1.txt");
-  graphe = alloueGraphe(nbsommet);
-  graphe = lectureGraphe("graphe1.txt");
+  int nbsommet, nbsarcs;
+  nbsarcs = nombre_arcs("graphe2.txt");
+  nbsommet = nombre_sommets("graphe2.txt");
+  printf("%d , %d\n", nbsarcs, nbsommet);
+  graphe = lectureGraphe("graphe2.txt");
+  printf("\n");
+  for (int i = 0; i < nbsommet; i++)
+  {
+    printf("Sommet numero= %d son nom= %s \n", graphe[i].numero, graphe[i].nomline);
+    //printf("voisins.arrivee= %d voisins.cout= %.2lf\n", graphe[i].voisins->val.arrivee, graphe[i].voisins->val.cout);
+  }
 }
-*/
