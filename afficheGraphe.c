@@ -47,7 +47,7 @@ void afficheNumline(T_SOMMET *tmp, int n)
 {
   printf("le numero de la ligne = %d\n", tmp[n].numero);
 }
-
+/*
 void main()
 {
   int nbsommets;
@@ -61,6 +61,7 @@ void main()
     afficheVoisins(graphe, i);
   }
 }
+*/
 
 /*
 #ifndef _structure
