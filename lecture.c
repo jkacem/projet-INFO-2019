@@ -44,27 +44,36 @@ L_ARC ajoutListeArc(L_ARC larc, int a, double c)
   return p;
 }
 
-T_SOMMET *initGraphe(int i, T_SOMMET *tsom)
+T_SOMMET initGraphe(int i, T_SOMMET *tsom)
 {
   tsom[i].numero = i;
-  tsom[i].nomline = "";
+  tsom[i].nomline = "\0";
   tsom[i].voisins = NULL;
+  return tsom[i];
 }
 
 T_SOMMET *alloueGraphe(int n)
 {
-  T_SOMMET *t;
+  T_SOMMET *t = NULL;
   if ((t = calloc(n, sizeof(*t))) == NULL)
     return NULL;
   else
     return t;
 }
 
+T_SOMMET ajoutSommet(T_SOMMET *tmp, int i, int num, char *nom)
+{
+  tmp[i] = initGraphe(i, tmp);
+  tmp[i].nomline = nom;
+  tmp[i].numero = num;
+  return tmp[i];
+}
+
 T_SOMMET *lectureGraphe(const char *file_name)
 {
   int depart, arrivee;
   int numero;
-  char nomline[512];
+  char nomline[128];
   double cout;
   T_SOMMET *graphe;
   FILE *f;
@@ -90,8 +99,8 @@ T_SOMMET *lectureGraphe(const char *file_name)
   {
     fgets(mot, 511, f);
     sscanf(mot, "%d %s", &numero, nomline);
-    graphe[i].numero = numero;
-    graphe[i].nomline = nomline;
+    graphe[i] = ajoutSommet(graphe, i, numero, nomline);
+    printf("nomline = %s && numero = %d\n", graphe[i].nomline, graphe[i].numero);
   }
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
 
@@ -104,13 +113,28 @@ T_SOMMET *lectureGraphe(const char *file_name)
     }
     else
     {
-      printf("ERROR 404\n");
+      graphe[depart].voisins = NULL;
+    }
+  }
+  for (int l = 0; l < nbsommet; l++)
+  {
+    printf(" [APRES//] nomline = %s && numero = %d\n", graphe[l].nomline, graphe[l].numero);
+
+    if (graphe[l].voisins != NULL)
+    {
+      printf("arrivee = %d cout = %.2lf\n", graphe[l].voisins->val.arrivee, graphe[l].voisins->val.cout);
     }
   }
 
-  for (int z = 0; z < nbsommet; z++)
-  {
-    printf("nomline = %s\n", graphe[z].nomline);
-  }
+  fclose(f);
   return graphe;
+}
+
+void main()
+{
+  T_SOMMET *graphe;
+  int nbsommet;
+  nbsommet = nombre_sommets("graphe1.txt");
+  graphe = alloueGraphe(nbsommet);
+  graphe = lectureGraphe("graphe1.txt");
 }
