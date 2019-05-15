@@ -3,11 +3,15 @@
 #include <string.h>
 #include "structure.h"
 #include "lecture.h"
+#include "affiche.h"
 /*
-JEDOUI Kacem 
-2018/2019
-PROJET INFO 2019
+----------------------------------------------------------------
+JEDOUI Kacem                                      2018/2019
+
+                  ****** PROJET INFO 2019 ******
+-----------------------------------------------------------------
 */
+
 void main()
 {
   int i, nbarc, nbsommet;
@@ -16,14 +20,14 @@ void main()
   nbsommet = nombre_sommets("graphe1.txt");
   printf("le nombre d'arcs est %d et le nombre de sommets est %d\n", nbarc, nbsommet);
   graphe = alloueGraphe(nbsommet);
+  printf("1\n");
   graphe = lectureGraphe("graphe1.txt");
-  for (i = 0; i < nbsommet; i++)
+  printf("2\n");
+  for (i; i < nbsommet; i++)
   {
-    printf("nomline = %s\n", graphe[i].nomline);
-
-    if (graphe[i].voisins != NULL)
-    {
-      printf("arrivee = %d cout = %lf\n", graphe[i].voisins->val.arrivee, graphe[i].voisins->val.cout);
-    }
+    printf("Le sommet %d\n", i);
+    afficheNomline(graphe, i);
+    afficheNumline(graphe, i);
+    afficheVoisins(graphe, i);
   }
 }

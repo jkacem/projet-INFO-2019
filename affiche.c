@@ -48,17 +48,18 @@ void afficheNumline(T_SOMMET *tmp, int n)
   printf("le numero de la ligne = %d\n", tmp[n].numero);
 }
 
-void afficheSommet(T_SOMMET *tmp, int n)
+void main()
 {
-  printf("Le sommet %s\n", n);
-  afficheNomline(tmp, n);
-  afficheNumline(tmp, n);
-  afficheVoisins(tmp, n);
-}
-
-void main(){
-  
-
+  int nbsommets;
+  T_SOMMET *graphe;
+  nbsommets = nombre_sommets("graphe1.txt");
+  graphe = lectureGraphe("graphe1.txt");
+  for (int i = 0; i < nbsommets; i++)
+  {
+    afficheNomline(graphe, i);
+    afficheNumline(graphe, i);
+    afficheVoisins(graphe, i);
+  }
 }
 /*
 #ifndef _structure

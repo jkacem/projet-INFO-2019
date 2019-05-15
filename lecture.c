@@ -100,7 +100,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
     fgets(mot, 511, f);
     sscanf(mot, "%d %s", &numero, nomline);
     graphe[i] = ajoutSommet(graphe, i, numero, nomline);
-    printf("nomline = %s && numero = %d\n", graphe[i].nomline, graphe[i].numero);
+    // printf("nomline = %s && numero = %d\n", graphe[i].nomline, graphe[i].numero);
   }
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
 
@@ -116,20 +116,11 @@ T_SOMMET *lectureGraphe(const char *file_name)
       graphe[depart].voisins = NULL;
     }
   }
-  for (int l = 0; l < nbsommet; l++)
-  {
-    printf(" [APRES] nomline = %s && numero = %d\n", graphe[l].nomline, graphe[l].numero);
-
-    if (graphe[l].voisins != NULL)
-    {
-      printf("arrivee = %d cout = %.2lf\n", graphe[l].voisins->val.arrivee, graphe[l].voisins->val.cout);
-    }
-  }
 
   fclose(f);
   return graphe;
 }
-
+/*
 void main()
 {
   T_SOMMET *graphe;
@@ -138,3 +129,4 @@ void main()
   graphe = alloueGraphe(nbsommet);
   graphe = lectureGraphe("graphe1.txt");
 }
+*/
