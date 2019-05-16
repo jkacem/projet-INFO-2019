@@ -72,7 +72,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
 {
   int depart, arrivee;
   int numero;
-  char nomline[128];
+  char nomline[512];
   double cout;
   T_SOMMET *graphe;
   FILE *f;
