@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structure.h"
+T_SOMMET *creerSommet();
 
 int nombre_arcs(const char *file_name);
 int nombre_sommets(const char *file_name);

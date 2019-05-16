@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 #include "structure.h"
+T_SOMMET *creerSommet()
+{
+  return NULL;
+}
 
 int nombre_arcs(const char *file_name)
 {
@@ -46,7 +50,7 @@ L_ARC ajoutListeArc(L_ARC larc, int a, double c)
 
 T_SOMMET *alloueGraphe(int n)
 {
-  T_SOMMET *t = NULL;
+  T_SOMMET *t = creerSommet();
   if ((t = calloc(n, sizeof(*t))) == NULL)
     return NULL;
   else
@@ -55,10 +59,12 @@ T_SOMMET *alloueGraphe(int n)
   }
 }
 
-T_SOMMET ajoutSommet(T_SOMMET tmp, int num, char *nom)
+T_SOMMET ajoutSommet(int num, char *nom)
 {
+  T_SOMMET tmp;
   tmp.nomline = nom;
   tmp.numero = num;
+  tmp.voisins = NULL;
   return tmp;
 }
 
@@ -74,7 +80,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
 
   int nbsommet, nbarc;
 
-  f = fopen(file_name, "r");
+  f = fopen(file_name, "r+");
   if (f == NULL)
   {
     printf("Impossible d’ouvrir le fichier\n");
@@ -83,20 +89,24 @@ T_SOMMET *lectureGraphe(const char *file_name)
 
   fgets(mot, 511, f);
   sscanf(mot, "%d %d", &nbsommet, &nbarc);
+  graphe = alloueGraphe(nbsommet);
 
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
-
-  graphe = alloueGraphe(nbsommet);
 
   for (int i = 0; i < nbsommet; i++)
   {
     //printf("Dans la fonction alloueGraphe\n");
     fgets(mot, 511, f);
-    sscanf(mot, "%d  %[^\n]", &numero, nomline);
+    if (mot[strlen(nomline) - 1] < 32)
+      mot[strlen(nomline) - 1] = 0;
+    sscanf(mot, "%d %[^\n]", &numero, nomline);
+    //fgetc(stdin);
     graphe[i].nomline = nomline;
-    //printf("graphe[%d].nomline = %s\n", i,graphe[i].nomline);
+    //printf("graphe[%d].nomline = %s\n", i, graphe[i].nomline);
+    //fflush(stdout);
     graphe[i].numero = numero;
-    //printf("graphe[%d].numero = %d\n",i, graphe[i].numero);
+    //printf("graphe[%d].numero = %d\n", i, graphe[i].numero);
+    //fflush(stdout);
   }
 
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
@@ -113,26 +123,31 @@ T_SOMMET *lectureGraphe(const char *file_name)
       graphe[depart].voisins = NULL;
     }
   }
-
   fclose(f);
+  //printf("\n");
+
+  //printf("voisins.arrivee= %d voisins.cout= %.2lf\n", graphe[i].voisins->val.arrivee, graphe[i].voisins->val.cout);
+
   return graphe;
 }
-/*
-void main()
+
+int main()
 {
   printf("Hello main()\n");
-  T_SOMMET *graphe;
+  T_SOMMET *graphe = creerSommet();
+
   int nbsommet, nbsarcs;
   nbsarcs = nombre_arcs("graphe2.txt");
   nbsommet = nombre_sommets("graphe2.txt");
   printf("%d , %d\n", nbsarcs, nbsommet);
   graphe = lectureGraphe("graphe2.txt");
-  printf("\n");
-  for (int i = 0; i < nbsommet; i++)
+  printf("\n Apres la lecture\n");
+  for (int k = 0; k < nbsommet; k++)
   {
-    printf("Sommet numero= %d son nom= %s \n", graphe[i].numero, graphe[i].nomline);
-    //printf("voisins.arrivee= %d voisins.cout= %.2lf\n", graphe[i].voisins->val.arrivee, graphe[i].voisins->val.cout);
+    printf("graphe[%d].nomline= %s \n", k, graphe[k].nomline);
+    printf("graphe[%d].numero = %d\n", k, graphe[k].numero);
+    printf("\n");
   }
-  
+  printf("\n");
+  return (0);
 }
-*/
