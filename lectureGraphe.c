@@ -51,12 +51,8 @@ L_ARC ajoutListeArc(L_ARC larc, int a, double c)
 T_SOMMET *alloueGraphe(int n)
 {
   T_SOMMET *t = creerSommet();
-  if ((t = calloc(n, sizeof(*t))) == NULL)
-    return NULL;
-  else
-  {
-    return t;
-  }
+  t = calloc(n, sizeof(*t));
+  return t;
 }
 
 T_SOMMET ajoutSommet(int num, char *nom)
@@ -67,12 +63,25 @@ T_SOMMET ajoutSommet(int num, char *nom)
   tmp.voisins = NULL;
   return tmp;
 }
+T_SOMMET *initGraphe(int n)
+{
+  int i;
+  T_SOMMET *tmp;
+  for (i; i < n; i++)
+  {
+    strcpy(tmp[i].nomline, "");
+    tmp[i].numero = 0;
+    tmp[i].voisins = NULL;
+  }
+  return tmp;
+}
 
 T_SOMMET *lectureGraphe(const char *file_name)
 {
+  int i, j;
   int depart, arrivee;
   int numero;
-  char nomline[512];
+  char nomligne[512];
   double cout;
   T_SOMMET *graphe;
   FILE *f;
@@ -80,7 +89,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
 
   int nbsommet, nbarc;
 
-  f = fopen(file_name, "r+");
+  f = fopen(file_name, "r");
   if (f == NULL)
   {
     printf("Impossible d’ouvrir le fichier\n");
@@ -90,19 +99,21 @@ T_SOMMET *lectureGraphe(const char *file_name)
   fgets(mot, 511, f);
   sscanf(mot, "%d %d", &nbsommet, &nbarc);
   graphe = alloueGraphe(nbsommet);
-
+  //graphe = initGraphe(nbsommet);
+  strcpy(nomligne, "");
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
-
-  for (int i = 0; i < nbsommet; i++)
+  for (i = 0; i < nbsommet; i++)
   {
     //printf("Dans la fonction alloueGraphe\n");
     fgets(mot, 511, f);
-    if (mot[strlen(nomline) - 1] < 32)
-      mot[strlen(nomline) - 1] = 0;
-    sscanf(mot, "%d %[^\n]", &numero, nomline);
+    if (mot[strlen(nomligne) - 1] < 32)
+      mot[strlen(nomligne) - 1] = 0;
+    sscanf(mot, "%d %[^n]", &numero, nomligne);
     //fgetc(stdin);
-    graphe[i].nomline = nomline;
-    //printf("graphe[%d].nomline = %s\n", i, graphe[i].nomline);
+    //graphe[i].nomline = calloc(1, sizeof(*nomligne));
+    //strcpy(graphe[i].nomline, nomligne);
+    graphe[i].nomline = strdup(nomligne);
+    printf("graphe[%d].nomline = %s\n", i, graphe[i].nomline);
     //fflush(stdout);
     graphe[i].numero = numero;
     //printf("graphe[%d].numero = %d\n", i, graphe[i].numero);
@@ -111,7 +122,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
 
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
 
-  for (int j = 0; j < nbarc; j++)
+  for (j = 0; j < nbarc; j++)
   {
     fgets(mot, 511, f);
     if (sscanf(mot, "%d %d %lf", &depart, &arrivee, &cout) == 3)
@@ -136,13 +147,13 @@ int main()
   printf("Hello main()\n");
   T_SOMMET *graphe = creerSommet();
 
-  int nbsommet, nbsarcs;
+  int nbsommet, nbsarcs, k;
   nbsarcs = nombre_arcs("graphe2.txt");
   nbsommet = nombre_sommets("graphe2.txt");
   printf("%d , %d\n", nbsarcs, nbsommet);
   graphe = lectureGraphe("graphe2.txt");
   printf("\n Apres la lecture\n");
-  for (int k = 0; k < nbsommet; k++)
+  for (k = 0; k < nbsommet; k++)
   {
     printf("graphe[%d].nomline= %s \n", k, graphe[k].nomline);
     printf("graphe[%d].numero = %d\n", k, graphe[k].numero);
