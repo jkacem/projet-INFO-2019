@@ -85,8 +85,7 @@ T_SOMMET *lectureGraphe(const char *file_name)
   int depart, arrivee;
   int numero;
   char nomligne[512];
-  char nomstation[512];
-  double cout, x, y;
+  double cout;
   T_SOMMET *graphe;
   FILE *f;
   char mot[512];
@@ -105,25 +104,21 @@ T_SOMMET *lectureGraphe(const char *file_name)
   graphe = alloueGraphe(nbsommet);
   //graphe = initGraphe(nbsommet);
   strcpy(nomligne, "");
-  strcpy(nomstation, "");
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
   for (i = 0; i < nbsommet; i++)
   {
     //printf("Dans la fonction alloueGraphe\n");
     fgets(mot, 511, f);
-    //if (mot[strlen(nomligne) - 1] < 32)
-    //  mot[strlen(nomligne) - 1] = 0;
-    sscanf(mot, "%d %lf %lf %s %[^n]", &numero, &x, &y, nomligne, nomstation);
+    if (mot[strlen(nomligne) - 1] < 32)
+      mot[strlen(nomligne) - 1] = 0;
+    sscanf(mot, "%d %[^n]", &numero, nomligne);
     //fgetc(stdin);
     //graphe[i].nomline = calloc(1, sizeof(*nomligne));
     //strcpy(graphe[i].nomline, nomligne);
-    graphe[i].nomline = nomligne;
-    graphe[i].nomstation = strdup(nomstation);
+    graphe[i].nomline = strdup(nomligne);
     printf("graphe[%d].nomline = %s\n", i, graphe[i].nomline);
     //fflush(stdout);
     graphe[i].numero = numero;
-    graphe[i].x = x;
-    graphe[i].y = y;
     //printf("graphe[%d].numero = %d\n", i, graphe[i].numero);
     //fflush(stdout);
   }
@@ -156,17 +151,15 @@ int main()
   T_SOMMET *graphe = creerSommet();
 
   int nbsommet, nbsarcs, k;
-  nbsarcs = nombre_arcs("graphetest.txt");
-  nbsommet = nombre_sommets("graphetest.txt");
+  nbsarcs = nombre_arcs("graphe2.txt");
+  nbsommet = nombre_sommets("graphe2.txt");
   printf("%d , %d\n", nbsarcs, nbsommet);
-  graphe = lectureGraphe("graphetest.txt");
+  graphe = lectureGraphe("graphe2.txt");
   printf("\n Apres la lecture\n");
   for (k = 0; k < nbsommet; k++)
   {
     printf("graphe[%d].nomline= %s \n", k, graphe[k].nomline);
-    printf("graphe[%d].nomstation = %s\n", k, graphe[k].nomstation);
-    printf("graphe[%d].x = %lf\n", k, graphe[k].x);
-    printf("graphe[%d].y = %lf\n", k, graphe[k].y);
+    printf("graphe[%d].numero = %d\n", k, graphe[k].numero);
     printf("\n");
   }
   printf("\n");

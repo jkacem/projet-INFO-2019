@@ -20,9 +20,7 @@ typedef struct lsucc
 typedef struct
 {
   char *nomline;
-  char *nomstation;
   int numero;
-  double x, y;
   L_ARC voisins;
 } T_SOMMET;
 
