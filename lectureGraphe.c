@@ -47,10 +47,12 @@ L_ARC ajoutListeArc(L_ARC larc, int a, double c)
   }
   return p;
 }
+/*
 int estVide(T_SOMMET *l)
 {
   return !l;
 }
+*/
 T_SOMMET *alloueGraphe(int n)
 {
   T_SOMMET *t = creerSommet();
@@ -103,29 +105,21 @@ T_SOMMET *lectureGraphe(const char *file_name)
   fgets(mot, 511, f);
   sscanf(mot, "%d %d", &nbsommet, &nbarc);
   graphe = alloueGraphe(nbsommet);
-  //graphe = initGraphe(nbsommet);
   strcpy(nomligne, "");
   strcpy(nomstation, "");
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
   for (i = 0; i < nbsommet; i++)
   {
-    //printf("Dans la fonction alloueGraphe\n");
     fgets(mot, 511, f);
-    //if (mot[strlen(nomligne) - 1] < 32)
-    //  mot[strlen(nomligne) - 1] = 0;
+
     sscanf(mot, "%d %lf %lf %s %[^n]", &numero, &x, &y, nomligne, nomstation);
-    //fgetc(stdin);
-    //graphe[i].nomline = calloc(1, sizeof(*nomligne));
-    //strcpy(graphe[i].nomline, nomligne);
+
     graphe[i].nomline = nomligne;
     graphe[i].nomstation = strdup(nomstation);
-    printf("graphe[%d].nomline = %s\n", i, graphe[i].nomline);
-    //fflush(stdout);
+    //printf("graphe[%d].nomline = %s\n", i, graphe[i].nomline);
     graphe[i].numero = numero;
     graphe[i].x = x;
     graphe[i].y = y;
-    //printf("graphe[%d].numero = %d\n", i, graphe[i].numero);
-    //fflush(stdout);
   }
 
   fgets(mot, 511, f); //Sauter la ligne "Sommet"
@@ -143,13 +137,10 @@ T_SOMMET *lectureGraphe(const char *file_name)
     }
   }
   fclose(f);
-  //printf("\n");
-
-  //printf("voisins.arrivee= %d voisins.cout= %.2lf\n", graphe[i].voisins->val.arrivee, graphe[i].voisins->val.cout);
 
   return graphe;
 }
-
+/*
 int main()
 {
   printf("Hello main()\n");
@@ -172,3 +163,4 @@ int main()
   printf("\n");
   return (0);
 }
+*/

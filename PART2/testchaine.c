@@ -5,10 +5,16 @@
 
 void main()
 {
-  double tmp;
-  double a = 2.0;
-  double n = 3.0;
-  tmp = sqrtf((a * a) + (n * n));
+  char *chaine1[3] = {"M1", "M1", "M1"};
+  char *chaine2 = "M1";
 
-  printf("%lf", tmp);
+  int res;
+  for (int i = 0; i < 3; i++)
+  {
+    res = strcmp(chaine1[i], chaine2);
+    if (res == 0)
+    {
+      printf("{%d} Les deux chaines sont indentiques\n", i);
+    }
+  }
 }
