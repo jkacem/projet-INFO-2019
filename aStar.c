@@ -7,7 +7,7 @@ int estVideListe(L_SOMMET l)
 {
 	return !l;
 }
-
+/*
 L_SOMMET ajout_somm_ordre(int id, L_SOMMET l, double *vals)
 { // liste (d'indices) l sera en ordre croissant en fonction des valeurs associées dans vals
 	L_SOMMET p = NULL;
@@ -28,7 +28,7 @@ L_SOMMET ajout_somm_ordre(int id, L_SOMMET l, double *vals)
 	}
 	return l;
 }
-
+*/
 L_SOMMET ajoutTete(L_SOMMET l, int k)
 {
 	L_SOMMET p;
@@ -70,13 +70,17 @@ double heuristique(int s1, int s2, T_SOMMET *graphe)
 
 int minListe(double *f, L_SOMMET l)
 {
-	int min = f[l->val];
+	if (estVideListe(l))
+		return 0;
+
+	int min = l->val;
+	printf("Dans minListe : min = %d \n", min);
 	L_SOMMET p;
 	for (p = l->suiv; !estVideListe(p); p = p->suiv)
 	{
-		if (f[p->val] < min)
+		if (f[p->val] < f[min])
 		{
-			min = f[p->val];
+			min = p->val;
 		}
 	}
 	return min;
@@ -174,7 +178,7 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	*/
 	//pere[d] = d;
 
-	LO = ajout_somm_ordre(d, LO, f);
+	LO = ajoutTete(LO, d);
 	printf("ajout tete de LO \n");
 	afficheListe(LO);
 	k = d;
