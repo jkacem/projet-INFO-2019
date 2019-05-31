@@ -8,6 +8,27 @@ int estVideListe(L_SOMMET l)
 	return !l;
 }
 
+L_SOMMET ajout_somm_ordre(int id, L_SOMMET l, double *vals)
+{ // liste (d'indices) l sera en ordre croissant en fonction des valeurs associées dans vals
+	L_SOMMET p = NULL;
+	p = l;
+	if (lsomm_vide(l) || vals[l->val] > vals[id])
+	{ // si id est la nouvelle tete de liste
+		l = ajout_somm_tete(id, l);
+	}
+	else
+	{
+		while (!lsomm_vide(p->suiv) && vals[p->suiv->val] <= vals[id])
+		{ // on verifie d'abord que p->suiv n'est pas nul
+			p = p->suiv;
+		} // a la fin on a soit vals[p->suiv->val] > vals[id] soit p en queue de liste
+		L_SOMMET e = creer_lsomm();
+		e = ajout_somm_tete(id, p->suiv);
+		p->suiv = e;
+	}
+	return l;
+}
+
 L_SOMMET ajoutTete(L_SOMMET l, int k)
 {
 	L_SOMMET p;
@@ -36,21 +57,6 @@ int rechercheElement(L_SOMMET l, int s)
 	return 0;
 }
 
-/*
-
-ajout � T_SOMMET :(( T_sommet.lf=1 c�d S est ds la liste ferm�e)) 
-et ((T_sommet.indiceLO indice du sommet dans le tas(liste ouverte)))
-T_sommet.indiceLO initialis� � -1 pour tous les sommets*
-LO est un tas: changer les fct du tas tq le min est indice 0
-lf est une liste, ajouter definition liste (visualiser liste/ 
-recherche_element resultat booleen)
-h re�oit les numeros de sommet 
-
-//creer liste L_ARC
-// fct recherche si le sommet est dans le tableau de sommet
-*/
-//#define INFINITY 99999
-
 double heuristique(int s1, int s2, T_SOMMET *graphe)
 {
 	double h;
@@ -58,17 +64,15 @@ double heuristique(int s1, int s2, T_SOMMET *graphe)
 	double x2 = graphe[s2].x;
 	double y1 = graphe[s1].y;
 	double y2 = graphe[s2].y;
-	h = (abs(x1 - x2) + abs(y1 - y2)) / 2;
+	h = (fabs(x1 - x2) + fabs(y1 - y2)) / 5.0;
 	return (h);
 }
-
-// a et d numero de sommets demand�s � l'utilisateur
 
 int minListe(double *f, L_SOMMET l)
 {
 	int min = f[l->val];
 	L_SOMMET p;
-	for (p = l; !estVideListe(p); p = p->suiv)
+	for (p = l->suiv; !estVideListe(p); p = p->suiv)
 	{
 		if (f[p->val] < min)
 		{
@@ -151,8 +155,9 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	//Initialisation
 	g[d] = 0;
 	h[d] = heuristique(d, a, graphe);
+	//printf("h[%d] = %lf\n", d, h[d]);
 	f[d] = g[d] + h[d];
-	for (jk = 0; (jk < nbsommet); jk++)
+	for (jk = 0; jk < nbsommet; jk++)
 	{
 		if (jk != d)
 		{
@@ -161,10 +166,15 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 			f[jk] = INFINITY;
 		}
 	}
-
+	/*
+	for (w = 0; w < nbsommet; w++)
+	{
+		printf("F[%d] = %lf\n", w, f[w]);
+	}
+	*/
 	//pere[d] = d;
 
-	LO = ajoutTete(LO, d);
+	LO = ajout_somm_ordre(d, LO, f);
 	printf("ajout tete de LO \n");
 	afficheListe(LO);
 	k = d;
@@ -173,7 +183,6 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	{
 		k = minListe(f, LO);
 		printf("k apres minListe = %d\n", k);
-
 		if (k == a)
 		{
 			printf("on a atteint l'arrivee, et on a trouve le plus court chemin FIN \n");
