@@ -4,6 +4,7 @@
 #include "structure.h"
 #include "lecture.h"
 #include "affiche.h"
+#include "aStar.h"
 /*
 ----------------------------------------------------------------
 JEDOUI Kacem                                      2018/2019

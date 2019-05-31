@@ -26,4 +26,10 @@ typedef struct
   L_ARC voisins;
 } T_SOMMET;
 
+typedef struct cell1
+{
+  int val;
+  struct cell1 *suiv;
+} * L_SOMMET;
+
 #endif
