@@ -11,9 +11,9 @@ int main()
 {
   printf(" ***** Hello main() ****** \n");
   printf(" \n");
-  int depart = 1;
-  int arrivee = 5;
-  printf("le depart = %d && arrivee = %d\n", depart, arrivee);
+  int d = 0;
+  int a = 5;
+  printf("le depart = %d && arrivee = %d\n", d, a);
   T_SOMMET *graphe;
   int nbsommet, nbsarcs, i;
   int *path;
@@ -23,13 +23,16 @@ int main()
   printf(" NBA = %d , NBS = %d\n", nbsarcs, nbsommet);
   graphe = lectureGraphe("graphetest.txt");
 
-  path = pathfinder(depart, arrivee, graphe, nbsommet);
-  for (int i = 0; i < nbsommet; i++)
+  path = pathfinder(d, a, graphe, nbsommet);
+  //afficheChemin(d, a, path);
+
+  for (i = 0; i < nbsommet; i++)
   {
     printf("pere[%d] = %d\n", i, path[i]);
   }
 
-  // afficheChemin(depart, arrivee, path);
+  printf("Affichons le chemin\n");
+  afficheChemin(d, a, path);
   /*
   printf("\n ***** On affiche le graphe ***** \n");
   printf(" \n");

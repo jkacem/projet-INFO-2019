@@ -74,7 +74,7 @@ int minListe(double *f, L_SOMMET l)
 		return 0;
 
 	int min = l->val;
-	printf("Dans minListe : min = %d \n", min);
+	//printf("Dans minListe : min = %d \n", min);
 	L_SOMMET p;
 	for (p = l->suiv; !estVideListe(p); p = p->suiv)
 	{
@@ -92,48 +92,90 @@ int *initTableauPeres(int *T, int nbsommet)
 	{
 		T[i] = -1;
 	}
+	return T;
 }
-
+L_SOMMET supprimerElement(L_SOMMET l, int s)
+{
+	L_SOMMET n, prec;
+	if (!estVideListe(l))
+	{
+		if (l->val == s)
+		{
+			n = l;
+			l = l->suiv;
+			free(n);
+		}
+		else
+		{
+			prec = l;
+			n = l->suiv;
+			while (!estVideListe(n))
+			{
+				if (n->val == s)
+				{
+					prec->suiv = n->suiv;
+					free(n);
+					break;
+				}
+				prec = n;
+				n = n->suiv;
+			}
+		}
+	}
+	return l;
+}
+/*
 L_SOMMET supprimerElement(L_SOMMET l, int s)
 {
 	L_SOMMET p, c;
-	p = l;
-	c = p;
-	if (estVideListe(l)) // S'il y'a un element dans la liste ==> on n'a pas de p->suiv !!
-		return l;
 
-	while (!estVideListe(c) && (c->val != s))
-	{
-		p = c->suiv;
-		c = p;
-	}
-	if (estVideListe(c))
-	{
+	if (estVideListe(l)) // S'il y'a un element dans la liste ==> on n'a pas de p->suiv !!
 		return NULL;
+
+	if ((l->val != s))
+	{
+		c = l;
+		l = l->suiv;
+		free(c);
+		return l;
 	}
-	p = c->suiv;
+	for (p = l; !estVideListe(p) && !estVideListe(p->suiv) && (c->val != s); p = p->suiv)
+		;
+
+	c = p->suiv;
+	p->suiv = c ? c->suiv : NULL;
 	free(c);
 	return l;
 }
+*/
 
 void afficheListe(L_SOMMET l)
 {
 	L_SOMMET p;
 	int i = 0;
-	for (p = l; !estVideListe(p); p = p->suiv)
+	if (estVideListe(l))
 	{
-		printf("liste[%d] = %d\n", i, p->val);
-		i++;
+		printf("La liste est vide\n");
+	}
+	else
+	{
+		for (p = l; !estVideListe(p); p = p->suiv)
+		{
+			printf("liste[%d] = %d\n", i, p->val);
+			i++;
+		}
 	}
 }
 void afficheChemin(int d, int a, int *pere)
 {
+	printf("On part de %d\n", d);
 	int i = a;
 	while (i != d)
 	{
-		printf("pere [%d] = %d\n", i, pere[i]);
+		printf("\tOn passe par %d \n", i);
 		i = pere[i];
 	}
+	printf("Pour atteindre %d\n", a);
 }
 int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 {
@@ -148,14 +190,14 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	f = calloc(nbsommet, sizeof(*f));
 	h = calloc(nbsommet, sizeof(*h));
 	pere = calloc(nbsommet, sizeof(*pere));
-	//pere = initTableauPeres(pere, nbsommet);
+	pere = initTableauPeres(pere, nbsommet);
 	//fct ajout elt dans une liste
 	//fct verifie que l'element n'est pas dans le tableau LF :int verifElement(int s, int* LF, int tlf)
-
 	LO = calloc(1, sizeof(*LO));
-	LF = calloc(1, sizeof(*LO));
+	LF = calloc(1, sizeof(*LF));
 	LO = creerListe();
 	LF = creerListe();
+
 	//Initialisation
 	g[d] = 0;
 	h[d] = heuristique(d, a, graphe);
@@ -182,9 +224,10 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	printf("ajout tete de LO \n");
 	afficheListe(LO);
 	k = d;
-
+	int kjb = 0;
 	while ((!estVideListe(LO)) && (k != a))
 	{
+		kjb++;
 		k = minListe(f, LO);
 		printf("k apres minListe = %d\n", k);
 		if (k == a)
@@ -235,9 +278,9 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 				}
 			}
 		}
-		free(g);
-		free(f);
-		free(h);
-		return pere;
 	}
+	free(g);
+	free(f);
+	free(h);
+	return pere;
 }
