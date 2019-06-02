@@ -11,18 +11,23 @@ int main()
   printf(" **************************************************\n");
   printf(" ***** On Passe au Reseau routier americain  ****** \n");
   printf(" **************************************************\n");
-  printf("On utilise le fichier 'NewYork.csv' \n");
+
+  char s[100];
+  printf("Saisir le reseau americain souhaite\n");
+  scanf("%s", &s);
+
+  printf("On utilise le fichier %s \n", s);
 
   int i, nbsommet, nbsarcs, d, a;
   T_SOMMET *graphe;
   graphe = creerSommet();
 
-  nbsarcs = nombre_arcs("grapheNewYork.csv");
-  nbsommet = nombre_sommets("grapheNewYork.csv");
+  nbsarcs = nombre_arcs(s);
+  nbsommet = nombre_sommets(s);
   printf("On affiche le nombre de sommets et d'arcs\n");
   printf(" NBA = %d , NBS = %d\n", nbsarcs, nbsommet);
-  graphe = lectureGraphe("grapheNewYork.csv");
-
+  graphe = lectureGraphe(s);
+  printf("Votre trajet ?\n");
   printf("Il faudra choisir entre 0 et %d\n", nbsommet);
 
   do

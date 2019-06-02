@@ -50,7 +50,6 @@ int main()
   int compt = 0;
 
   int voisins1[14] = {2, 1, 1, 3, 2, 3, 3, 2, 1, 4, 2, 1, 3, 1};
-  printf("On commence le test pour 'graphe2.txt' \n");
   printf("\n");
   if (testnbsommet("graphetest.txt") && testnbarcs("graphetest.txt"))
   {
