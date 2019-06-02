@@ -168,14 +168,14 @@ void afficheListe(L_SOMMET l)
 }
 void afficheChemin(int d, int a, int *pere)
 {
-	printf("On part de %d\n", d);
+	printf("Pour arriver a %d\n", a);
 	int i = a;
 	while (i != d)
 	{
 		printf("\tOn passe par %d \n", i);
 		i = pere[i];
 	}
-	printf("Pour atteindre %d\n", a);
+	printf("On commence par %d\n", d);
 }
 int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 {
@@ -184,7 +184,7 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	L_ARC p;
 	int *pere = NULL;
 	L_SOMMET LO, LF; //liste initialisation -1
-
+	printf("On commence A*\n");
 	//int tlf = 0;
 	g = calloc(nbsommet, sizeof(*g));
 	f = calloc(nbsommet, sizeof(*f));
@@ -221,27 +221,30 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 	//pere[d] = d;
 
 	LO = ajoutTete(LO, d);
-	printf("ajout tete de LO \n");
-	afficheListe(LO);
+	//printf("ajout tete de LO \n");
+	//afficheListe(LO);
 	k = d;
 	int kjb = 0;
+	printf("Chargement ...\n");
+	printf("\n");
+
 	while ((!estVideListe(LO)) && (k != a))
 	{
-		kjb++;
+		//kjb++;
 		k = minListe(f, LO);
-		printf("k apres minListe = %d\n", k);
+		//printf("k apres minListe = %d\n", k);
 		if (k == a)
 		{
-			printf("on a atteint l'arrivee, et on a trouve le plus court chemin FIN \n");
+			printf("on a atteint l'arrivee, et on a trouve le plus court chemin  \n");
 		}
 		else
 		{
 			LF = ajoutTete(LF, k);
-			printf("ajout tete de LF\n");
-			afficheListe(LF);
+			//printf("ajout tete de LF\n");
+			//afficheListe(LF);
 			LO = supprimerElement(LO, k);
-			printf("LO supprime\n");
-			afficheListe(LO);
+			//printf("LO supprime\n");
+			//afficheListe(LO);
 			for (p = graphe[k].voisins; p != NULL; p = p->suiv)
 			{
 				s = p->val.arrivee;
@@ -254,8 +257,8 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 						h[s] = heuristique(s, a, graphe);
 						f[s] = g[s] + h[s];
 						LO = ajoutTete(LO, s);
-						printf("Apres l'ajout des voisins dans LO \n");
-						afficheListe(LO);
+						//printf("Apres l'ajout des voisins dans LO \n");
+						//afficheListe(LO);
 					}
 
 					else
@@ -265,14 +268,13 @@ int *pathfinder(int d, int a, T_SOMMET *graphe, int nbsommet)
 							pere[s] = k;
 							g[s] = g[k] + p->val.cout;
 							LO = supprimerElement(LO, s);
-							printf("Apres suppression de l'element dans LO\n");
-
-							afficheListe(LO);
+							//printf("Apres suppression de l'element dans LO\n");
+							//afficheListe(LO);
 							h[s] = heuristique(s, a, graphe);
 							f[s] = g[s] + h[s];
 							LO = ajoutTete(LO, s);
-							printf("Apres l'ajout de l'element dans LO\n");
-							afficheListe(LO);
+							//printf("Apres l'ajout de l'element dans LO\n");
+							//afficheListe(LO);
 						}
 					}
 				}
