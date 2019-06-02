@@ -11,6 +11,7 @@ int main()
   printf(" *********************************************\n");
   printf(" ***** On verifie l'affichage du Graphe ****** \n");
   printf(" *********************************************\n");
+  printf("On commence le test pour 'graphe2.txt' \n");
 
   printf(" \n");
 

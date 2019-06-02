@@ -37,6 +37,11 @@ int testnbarcs(const char *file_name)
 
 int main()
 {
+  printf(" ********************************************\n");
+  printf(" ***** On verifie la lecture du Graphe ****** \n");
+  printf(" ********************************************\n");
+  printf("On commence le test pour 'graphe2.txt' \n");
+
   int i;
   char *T1[14] = {"Sommet 1", "Sommet 2", "Sommet 3", "Sommet 4", "Sommet 5", "Sommet 6", "Sommet 7", "Sommet 8", "Sommet 9", "Sommet 10", "Sommet 11", "Sommet 12", "Sommet 13", "Sommet 14"};
   //printf("T[0]='%s' de lenght = %d \n", T1[0], strlen(T1[0]));

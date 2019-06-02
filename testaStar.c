@@ -8,6 +8,11 @@
 
 int main()
 {
+  printf(" *******************************************\n");
+  printf(" ***** On verifie l'algorithme ASTAR  ****** \n");
+  printf(" *******************************************\n");
+  printf("On commence le test pour 'graphe2.txt' \n");
+
   int i, nbsommet, d, a;
   T_SOMMET *graphe;
   graphe = creerSommet();
@@ -44,4 +49,5 @@ int main()
 
   printf("Affichons le chemin\n");
   afficheChemin(d, a, path);
+  return 0;
 }
